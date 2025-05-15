@@ -264,7 +264,6 @@ int modePlay(char player_name[25], int total_len, char text[][MAX_LEN], char wor
     }
     current_time = time(NULL);
     passed_time = difftime(current_time, start_time);
-    printf("%s %d %f %d %d %d", player_name, error, passed_time, total_len, right_input, text_size);
     endGame(player_name, error, passed_time, total_len, right_input, text_size);
     clearBuff();
 }
