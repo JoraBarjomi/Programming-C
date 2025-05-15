@@ -1,0 +1,10 @@
+========================
+Player        : Гоша
+Accuracy      : 95%
+Speed         : 0.46 WPM
+Chars entered : 56
+Total errors  : 3
+Time elapsed  : 23 sec
+Overall score : 3.88
+========================
+

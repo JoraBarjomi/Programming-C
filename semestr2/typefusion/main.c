@@ -16,6 +16,7 @@
 
 #define COLOR_GREEN "\033[32m"
 #define COLOR_RED "\e[0;91m"
+#define COLOR_YELLOW "\033[1;33m"
 #define COLOR_BRIGHT_RED    "\e[1;31m"
 #define COLOR_DARK_RED     "\033[38;5;196m"
 #define COLOR_EMERALD      "\033[38;5;42m"
@@ -63,9 +64,29 @@ void grtFunc(char name[25]){
 
 void save_stats(const char name[25], double accuracy, double wpm, int total_len, int error, double time,  double score){
     FILE *stats_file;
-    stats_file = fopen("/home/jorik/Документы/Programming-C/semestr2/typefusion/stats.txt", "r");
-
-    fprintf(stats_file, "Player: %s, | Accuracy: %.0f | Speed: %.2f | Entered chars: %d | Total errors: %d | Time: %.0f | Score: %.2f", name, accuracy, wpm, total_len, error, time, score);
+    stats_file = fopen("/home/jorik/Документы/Programming-C/semestr2/typefusion/stats.txt", "a");
+    if (stats_file == NULL) {
+        perror("Error opening stats file");
+        return;
+    }
+    fprintf(stats_file,
+        "========================\n"
+        "Player        : %s\n"
+        "Accuracy      : %.0f%%\n"
+        "Speed         : %.2f WPM\n"
+        "Chars entered : %d\n"
+        "Total errors  : %d\n"
+        "Time elapsed  : %.0f sec\n"
+        "Overall score : %.2f\n"
+        "========================\n\n",
+        name,
+        accuracy,
+        wpm,
+        total_len,
+        error,
+        time,
+        score
+    );
 
     fclose(stats_file);
 }
@@ -76,24 +97,27 @@ void endGame(char name[25], int error, double time, int total_len, int len_input
     double score = (((len_input - error) / time) / total_len) * 100;
     double wpm = ((double)len_input / 5) / time;
     printf("\nStats: \n");
-    if (error <= 3 && time < 15){
-        printf(COLOR_GREEN"\n[NICE]\n" COLOR_RESET "Time: %.0f seconds\nAccuracy: %.0f\nEntered chars: %d\nWpM: %.2f\nTotal score: %.2f", time, accuracy, len_input, wpm, score);
+    if (error < 3 && time < 20){
+        printf(COLOR_GREEN"\n[NICE]\n" COLOR_RESET "Time: %.0f seconds\nAccuracy: %.0f\nEntered chars: %d\nWpM: %.2f\nTotal score: %.2f\n", time, accuracy, len_input, wpm, score);
+        fflush(stdout);
+    }else if (error <= 5 && time <= 30){
+        printf(COLOR_GREEN"\n[NICE]\n" COLOR_RESET "Time: %.0f seconds\nAccuracy: %.0f\nEntered chars: %d\nWpM: %.2f\nTotal score: %.2f\n", time, accuracy, len_input, wpm, score);
+        fflush(stdout);
+    } else{
+        printf(COLOR_RED"\n[BAD]\nErorrs: %d\n" COLOR_RESET "Time: %.0f seconds\nAccuracy: %.0f\nEntered chars: %d\nWpM: %.2f\nTotal score: %.2f\n",error, time, accuracy, len_input, wpm, score);
         fflush(stdout);
     }
-    else{
-        printf(COLOR_RED"\n[BAD]\nErorrs: %d\n" COLOR_RESET "Time: %.0f seconds\nAccuracy: %.0f\nEntered chars: %d\nWpM: %.2f\nTotal score: %.2f",error, time, accuracy, len_input, wpm, score);
-        fflush(stdout);
-    }
+    printf("\n");
     save_stats(name, accuracy, wpm, total_len, error, time, score);
 }
 
 void printMenu(char name[25]) {
-    grtFunc(name);
     printf("1. Play\n");
     printf("2. Difficulty\n");
     printf("3. Mode\n");
     printf("4. Text size\n");
-    printf("5. Exit\n");
+    printf("5. Stats\n");
+    printf("6. Exit\n");
     printf(">");
 }
 
@@ -113,7 +137,7 @@ int choiceFunc(){
 int navMenu(){
 
     int value;
-    while (scanf("%d", &value) != 1 || value < 1 || value > 5)
+    while (scanf("%d", &value) != 1 || value < 1 || value > 6)
     {
         printf("Incorrect input. Try again: ");
         int c;
@@ -139,13 +163,12 @@ int wordsCnt(const char *filename, char words[MAX_WORDS][MAX_LEN]){
     return word_count;
 }
 
-int bckSpace(int last_pos, int len_input, int j){
-    if (last_pos > j) {
-        (last_pos)--;
-        len_input--;
+int bckSpace(int *last_pos, int *len_input, int j){
+    if (*last_pos > j) {
+        (*last_pos)--;
+        (*len_input)--;
         printf("\b \b");
     }
-    return last_pos, len_input;
 }
 
 int modeDifficulty(char words[MAX_WORDS][MAX_LEN]){
@@ -234,11 +257,16 @@ int modePlay(char player_name[25], int total_len, char text[][MAX_LEN], char wor
         while(j < strlen(text[i]) && len_input < total_len){
             int c = getch();
             len_input++;
-            if (c == 127 || c == 8) {
-                bckSpace(last_pos, len_input, j);
+            if (last_pos < MAX_LEN - 1) {
+                input[last_pos++] = c;
             }
-            else if (c != EOF || c != '\n'){
-                input[last_pos] = c;
+            if (c == 127 || c == 8) {
+                bckSpace(&last_pos, &len_input, j);
+            }
+            else if (c != EOF && c != '\n'){
+                if (last_pos < MAX_LEN - 1) {
+                    input[last_pos++] = c;
+                }
                 if (c == text[i][j]){
                     printf(COLOR_GREEN "%c" COLOR_RESET, (char)c);
                     j++;
@@ -265,7 +293,6 @@ int modePlay(char player_name[25], int total_len, char text[][MAX_LEN], char wor
     current_time = time(NULL);
     passed_time = difftime(current_time, start_time);
     endGame(player_name, error, passed_time, total_len, right_input, text_size);
-    clearBuff();
 }
 
 int main(int, char**){
@@ -286,11 +313,12 @@ int main(int, char**){
         srand(time(NULL));
 
         printf("Enter your name: ");
-        scanf("%s", &playerName);
+        fgets(playerName, sizeof playerName, stdin);
+        playerName[strcspn(playerName, "\n")] = '\0';
 
-        while (flag)
-        {
+        grtFunc(playerName);
 
+        while (flag){
         printMenu(playerName);
 
         switch (navMenu()) {
@@ -306,8 +334,6 @@ int main(int, char**){
             case 3: //mode
                 printf("HELLO 3");
                 //mode 1 min 2 min 5 min
-                //stats save
-                //loading text dynamccly
                 clearBuff();
                 break;
 
@@ -321,9 +347,19 @@ int main(int, char**){
                     text_size = LONG;
                 }
                 clearBuff();
-                break;
-                
-            case 5: //exit
+                break;            
+            case 5: //print stats
+                char buff[100];
+                printf("Stats of all players:\n");
+                FILE *stats_file;
+                stats_file = fopen("/home/jorik/Документы/Programming-C/semestr2/typefusion/stats.txt", "r");
+                    if (stats_file){
+                        while(fgets(buff, sizeof(buff), stats_file) != NULL){
+                            printf("%s", buff);
+                        }
+                    }
+                    break;
+            case 6: //exit
                 printf("GG!");
                 sleep(1);
                 flag = false;
