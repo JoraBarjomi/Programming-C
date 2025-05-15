@@ -61,30 +61,14 @@ void grtFunc(char name[25]){
 
 }
 
-void save_stats(const char name[25], double accuracy, double wpm, int total_len, int error, double time,  double score){
-    FILE *stats_file;
-    stats_file = fopen("/home/jorik/Документы/Programming-C/semestr2/typefusion/stats.txt", "r");
+void endGame(int error){
 
-    fprintf(stats_file, "Player: %s, | Accuracy: %.0f | Speed: %.2f | Entered chars: %d | Total errors: %d | Time: %.0f | Score: %.2f", name, accuracy, wpm, total_len, error, time, score);
-
-    fclose(stats_file);
-}
-
-void endGame(char name[25], int error, double time, int total_len, int len_input, int text_size){
-
-    double accuracy = ((double)len_input / total_len) * 100;
-    double score = (((len_input - error) / time) / total_len) * 100;
-    double wpm = ((double)len_input / 5) / time;
-    printf("\nStats: \n");
-    if (error <= 3 && time < 15){
-        printf(COLOR_GREEN"\n[NICE]\n" COLOR_RESET "Time: %.0f seconds\nAccuracy: %.0f\nEntered chars: %d\nWpM: %.2f\nTotal score: %.2f", time, accuracy, len_input, wpm, score);
-        fflush(stdout);
+    if (error == 0)
+    {
+        printf("\nResults: " COLOR_GREEN"\n[NICE!]\n" COLOR_RESET);
     }
-    else{
-        printf(COLOR_RED"\n[BAD]\nErorrs: %d\n" COLOR_RESET "Time: %.0f seconds\nAccuracy: %.0f\nEntered chars: %d\nWpM: %.2f\nTotal score: %.2f",error, time, accuracy, len_input, wpm, score);
-        fflush(stdout);
-    }
-    save_stats(name, accuracy, wpm, total_len, error, time, score);
+
+    else printf("\nReusluts: " COLOR_RED"\n[BAD!] Erorrs: %d\n" COLOR_RESET, error);
 }
 
 void printMenu(char name[25]) {
@@ -148,6 +132,29 @@ int bckSpace(int last_pos, int len_input, int j){
     return last_pos, len_input;
 }
 
+int regFunc(int i, int j, int last_pos, int len_input, char text[][MAX_LEN], int total_len, char input[], int error){
+
+    while(j < strlen(text[i]) && len_input < total_len){
+        int c = getch();
+        len_input++;
+
+        if (c == 127 || c == 8) {
+            bckSpace(last_pos, len_input, j);
+        }
+        else if (c != EOF || c != '\n'){
+            input[last_pos] = c;
+            if (c == text[i][j]){
+                printf(COLOR_GREEN "%c" COLOR_RESET, (char)c);
+                j++;
+            } else {
+                printf(COLOR_RED "%c" COLOR_RESET, c);
+                error++;
+            }
+            last_pos++;
+        }
+    }
+}
+
 int modeDifficulty(char words[MAX_WORDS][MAX_LEN]){
     int word_count = 0;
     printf("Choose difficulty:\n easy(1)     normal(2)       hard(3)\n ");
@@ -156,6 +163,7 @@ int modeDifficulty(char words[MAX_WORDS][MAX_LEN]){
             char filename[] = "/home/jorik/Документы/Programming-C/semestr2/typefusion/words.txt";
             word_count = wordsCnt(filename, words);
             return word_count;
+            
         }
         case 2:{
             char filename[] = "/home/jorik/Документы/Programming-C/semestr2/typefusion/words2.txt";
@@ -184,6 +192,7 @@ int modeSize(char words[MAX_WORDS][MAX_LEN]){
             char text[SHORT][MAX_LEN];
             return 1;
         }
+
         case 2:{
             char text[MEDIUM][MAX_LEN];
             return 2;
@@ -198,78 +207,48 @@ int modeSize(char words[MAX_WORDS][MAX_LEN]){
     }
 }
 
-int modePlay(char player_name[25], int total_len, char text[][MAX_LEN], char words[MAX_WORDS][MAX_LEN], int word_count, int text_size, const char *filename){
+int modePlay(int total_len, int error, char text[][MAX_LEN], char words[MAX_WORDS][MAX_LEN], int word_count, int text_size){
 
-    time_t start_time;
-    time_t current_time;
-    double passed_time;
     int random_idx;
-    int error = 0;
+    error = 0;
     total_len += text_size - 1;
     printf("\n");
     clearBuff();
 
-    if (word_count == 0){
-        word_count = wordsCnt(filename, words);
-    }
-
-    start_time = time(NULL);
-
     for (int i = 0; i < text_size; i++){
-        random_idx = rand() % word_count;
-        strcpy(text[i], words[random_idx]);
-        printf("%s ", text[i]);
-        total_len += strlen(text[i]);
+    random_idx = rand() % word_count;
+    strcpy(text[i], words[random_idx]);
+    printf("%s ", text[i]);
+    total_len += strlen(text[i]);
     }
     printf("\n\n");
-        
-    int last_pos = 0;    
-    int len_input = 0;
-    int right_input = 0;
-    for (int i = 0; i < text_size; i++){
+   
+
+    for (int i = 0; i < SHORT; i++){
 
         int j = 0;
+        int last_pos = 0;
         char input[MAX_LEN] = {0};
+        int len_input = 0;
 
-        while(j < strlen(text[i]) && len_input < total_len){
-            int c = getch();
-            len_input++;
-            if (c == 127 || c == 8) {
-                bckSpace(last_pos, len_input, j);
-            }
-            else if (c != EOF || c != '\n'){
-                input[last_pos] = c;
-                if (c == text[i][j]){
-                    printf(COLOR_GREEN "%c" COLOR_RESET, (char)c);
-                    j++;
-                    right_input++;
-                } else {
-                    printf(COLOR_RED "%c" COLOR_RESET, c);
-                    error++;
-                }
-                last_pos++;
-            }
-        }
-        if (i < text_size - 1){
+        regFunc(i, j, last_pos, len_input, text, total_len, input, error);
+
+        if (i < SHORT - 1){
             int c = getch();
             if (c == ' ' && len_input < total_len) {
                 printf(" ");
                 len_input++;
-                right_input++;
             } else{
                 printf(COLOR_BRIGHT_RED "%c" COLOR_RESET, (char)c);
                 error++;
             }
         }
     }
-    current_time = time(NULL);
-    passed_time = difftime(current_time, start_time);
-    printf("%s %d %f %d %d %d", player_name, error, passed_time, total_len, right_input, text_size);
-    endGame(player_name, error, passed_time, total_len, right_input, text_size);
+    endGame(error);
     clearBuff();
 }
 
-int main(int, char**){
+    int main(int, char**){
 
         FILE *file;
         char words[MAX_WORDS][MAX_LEN];
@@ -278,11 +257,8 @@ int main(int, char**){
         int word_count = 0;
         int error = 0;
         int total_len = 0;
-        int c, mode, diff, choice, random_idx;
+        int c, text_size, mode, diff, choice, random_idx;
         char playerName[25];
-
-        const char *curret_difficulty = "/home/jorik/Документы/Programming-C/semestr2/typefusion/words.txt";
-        int text_size = SHORT;
 
         srand(time(NULL));
 
@@ -294,9 +270,10 @@ int main(int, char**){
 
         printMenu(playerName);
 
+
         switch (navMenu()) {
             case 1: //play
-                modePlay(playerName, total_len, text, words, word_count, text_size, curret_difficulty);
+                modePlay(total_len, error, text, words, word_count, text_size);
                 break;
 
             case 2: //difficulty
@@ -306,9 +283,6 @@ int main(int, char**){
 
             case 3: //mode
                 printf("HELLO 3");
-                //mode 1 min 2 min 5 min
-                //stats save
-                //loading text dynamccly
                 clearBuff();
                 break;
 
@@ -330,6 +304,129 @@ int main(int, char**){
                 flag = false;
         }
 
+        // printf("Choose mode:\n short(1)     medium(2)       long(3)\n\n");
+        // switch (choiceFunc())
+        // {
+        // case 1:{
 
+        //     char text[SHORT][MAX_LEN];
+        //     int total_len = 0;
+
+        //     for (int i = 0; i < SHORT; i++){
+        //         random_idx = rand() % word_count;
+        //         strcpy(text[i], words[random_idx]);
+        //         printf("%s ", text[i]);
+        //         total_len += strlen(text[i]);
+        //     }
+
+        //     total_len += SHORT - 1;
+        //     printf("\n");
+        //     clearBuff();
+
+        //     for (int i = 0; i < SHORT; i++){
+
+        //         int j = 0;
+        //         int last_pos = 0;
+        //         char input[MAX_LEN] = {0};
+        //         int len_input = 0;
+
+        //         regFunc(i, j, last_pos, len_input, text, total_len, input, error);
+
+        //         if (i < SHORT - 1){
+        //             int c = getch();
+        //             if (c == ' ' && len_input < total_len) {
+        //                 printf(" ");
+        //                 len_input++;
+        //             } else{
+        //                 printf(COLOR_BRIGHT_RED "%c" COLOR_RESET, (char)c);
+        //                 error++;
+        //             }
+        //         }
+        //     }
+        //     endGame(error);
+        //     clearBuff();
+        //     break;
+        // }
+
+        // case 2:{
+
+        //    char text[MEDIUM][MAX_LEN];
+        //     int total_len = 0;
+
+        //     for (int i = 0; i < MEDIUM; i++){
+        //         random_idx = rand() % word_count;
+        //         strcpy(text[i], words[random_idx]);
+        //         printf("%s ", text[i]);
+        //         total_len += strlen(text[i]);
+        //     }
+
+        //     total_len += MEDIUM - 1;
+        //     printf("\n");
+        //     clearBuff();
+
+        //     for (int i = 0; i < MEDIUM; i++){
+
+        //         int j = 0;
+        //         int last_pos = 0;
+        //         char input[MAX_LEN] = {0};
+        //         int len_input = 0;
+
+        //         regFunc(i, j, last_pos, len_input, text, total_len, input, error);
+
+        //         if (i < MEDIUM - 1){
+        //             int c = getch();
+        //             if (c == ' ' && len_input < total_len) {
+        //                 printf(" ");
+        //                 len_input++;
+        //             } else{
+        //                 printf(COLOR_BRIGHT_RED "%c" COLOR_RESET, (char)c);
+        //                 error++;
+        //             }
+        //         }
+        //     }
+        //     endGame(error);
+        //     clearBuff();
+        //     break;
+        // }
+        // case 3:{
+
+        //     char text[SHORT][MAX_LEN];
+        //     int total_len = 0;
+
+        //     for (int i = 0; i < SHORT; i++){
+        //         random_idx = rand() % word_count;
+        //         strcpy(text[i], words[random_idx]);
+        //         printf("%s ", text[i]);
+        //         total_len += strlen(text[i]);
+        //     }
+
+        //     total_len += SHORT - 1;
+        //     printf("\n");
+        //     clearBuff();
+
+        //     for (int i = 0; i < SHORT; i++){
+
+        //         int j = 0;
+        //         int last_pos = 0;
+        //         char input[MAX_LEN] = {0};
+        //         int len_input = 0;
+
+        //         regFunc(i, j, last_pos, len_input, text, total_len, input, error);
+
+        //         if (i < SHORT - 1){
+        //             int c = getch();
+        //             if (c == ' ' && len_input < total_len) {
+        //                 printf(" ");
+        //                 len_input++;
+        //             } else{
+        //                 printf(COLOR_BRIGHT_RED "%c" COLOR_RESET, (char)c);
+        //                 error++;
+        //             }
+        //         }
+        //     }
+        //     endGame(error);
+        //     clearBuff();
+        //     break;
+        //     }
         }
     }
