@@ -92,6 +92,8 @@ static void test_swap_function(void **state) {
     Stats stats = {0};
     
     swap(&a, &b, &stats);
+
+    a = a + 10;
     
     assert_int_equal(a, 10);
     assert_int_equal(b, 5);
@@ -166,7 +168,7 @@ static void test_quick_sort_stats(void **state) {
     
     quick_sort(arr, 0, n-1, &stats);
     
-    assert_true(stats.comparisons > 0);
+    assert_true(stats.comparisons > 100);
     assert_true(stats.swaps > 0);
 }
 
