@@ -424,7 +424,6 @@ int modePlay(char player_name[25], int total_len, char text[][MAX_LEN], char wor
         }
 
         double accuracy = ((double)right_input / total_len) * 100;
-        printf("\n\n%f\n\n", accuracy);
         if (accuracy > 90){
 
             if(filename == "../include/words.txt") filename = "../include/words2.txt";
