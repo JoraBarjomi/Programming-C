@@ -1,0 +1,380 @@
+========================
+Player        : Гоша
+Accuracy      : 95%
+Speed         : 0.46 WPM
+Chars entered : 56
+Total errors  : 3
+Time elapsed  : 23 sec
+Overall score : 3.88
+========================
+
+========================
+Player        : sosal?
+Accuracy      : 97%
+Speed         : 0.31 WPM
+Chars entered : 29
+Total errors  : 1
+Time elapsed  : 18 sec
+Overall score : 5.17
+========================
+
+========================
+Player        : 1
+Accuracy      : 100%
+Speed         : 0.27 WPM
+Chars entered : 27
+Total errors  : 0
+Time elapsed  : 20 sec
+Overall score : 5.00
+========================
+
+========================
+Player        : 1
+Accuracy      : 7%
+Speed         : 0.04 WPM
+Chars entered : 27
+Total errors  : 69
+Time elapsed  : 10 sec
+Overall score : -24.81
+========================
+
+========================
+Player        : 1
+Accuracy      : 0%
+Speed         : 0.00 WPM
+Chars entered : 24
+Total errors  : 4
+Time elapsed  : 8 sec
+Overall score : -2.08
+========================
+
+========================
+Player        : kasr
+Accuracy      : 16%
+Speed         : 0.06 WPM
+Chars entered : 31
+Total errors  : 29
+Time elapsed  : 18 sec
+Overall score : -4.30
+========================
+
+========================
+Player        : VADIM
+Accuracy      : 3%
+Speed         : 0.01 WPM
+Chars entered : 32
+Total errors  : 1
+Time elapsed  : 18 sec
+Overall score : 0.00
+========================
+
+========================
+Player        : VADIM
+Accuracy      : 57%
+Speed         : 0.28 WPM
+Chars entered : 30
+Total errors  : 1
+Time elapsed  : 12 sec
+Overall score : 4.44
+========================
+
+========================
+Player        : Гость
+Accuracy      : 82%
+Speed         : 0.39 WPM
+Chars entered : 33
+Total errors  : 1
+Time elapsed  : 14 sec
+Overall score : 5.63
+========================
+
+========================
+Player        : Pashok
+Accuracy      : 86%
+Speed         : 0.44 WPM
+Chars entered : 28
+Total errors  : 0
+Time elapsed  : 11 sec
+Overall score : 7.79
+========================
+
+========================
+Player        : 1
+Accuracy      : 81%
+Speed         : 0.44 WPM
+Chars entered : 27
+Total errors  : 4
+Time elapsed  : 10 sec
+Overall score : 6.67
+========================
+
+========================
+Player        : ProPlayer556_2004CSProPl
+Accuracy      : 94%
+Speed         : 0.62 WPM
+Chars entered : 33
+Total errors  : 2
+Time elapsed  : 10 sec
+Overall score : 8.79
+========================
+
+========================
+Player        : ProPlayer556_2004CSProPl
+Accuracy      : 34%
+Speed         : 0.80 WPM
+Chars entered : 129
+Total errors  : 0
+Time elapsed  : 11 sec
+Overall score : 3.10
+========================
+
+========================
+Player        : ProPlayer556_2004CSProPl
+Accuracy      : 33%
+Speed         : 0.68 WPM
+Chars entered : 123
+Total errors  : 2
+Time elapsed  : 12 sec
+Overall score : 2.64
+========================
+
+========================
+Player        : ProPlayer556_2004CSProPl
+Accuracy      : 84%
+Speed         : 0.79 WPM
+Chars entered : 146
+Total errors  : 0
+Time elapsed  : 31 sec
+Overall score : 2.70
+========================
+
+========================
+Player        : ProPlayer556_2004CSProPl
+Accuracy      : 85%
+Speed         : 0.67 WPM
+Chars entered : 123
+Total errors  : 9
+Time elapsed  : 31 sec
+Overall score : 2.49
+========================
+
+========================
+Player        : RTYu
+Accuracy      : 87%
+Speed         : 0.54 WPM
+Chars entered : 31
+Total errors  : 2
+Time elapsed  : 10 sec
+Overall score : 8.06
+========================
+
+========================
+Player        : gosha
+Accuracy      : 80%
+Speed         : 0.51 WPM
+Chars entered : 99
+Total errors  : 5
+Time elapsed  : 31 sec
+Overall score : 2.41
+========================
+
+========================
+Player        : goshan
+Accuracy      : 77%
+Speed         : 0.48 WPM
+Chars entered : 47
+Total errors  : 3
+Time elapsed  : 15 sec
+Overall score : 4.68
+========================
+
+========================
+Player        : goshan
+Accuracy      : 58%
+Speed         : 0.25 WPM
+Chars entered : 33
+Total errors  : 0
+Time elapsed  : 15 sec
+Overall score : 3.84
+========================
+
+========================
+Player        : goshan
+Accuracy      : 84%
+Speed         : 0.52 WPM
+Chars entered : 95
+Total errors  : 7
+Time elapsed  : 31 sec
+Overall score : 2.48
+========================
+
+========================
+Player        : vova
+Accuracy      : 60%
+Speed         : 0.40 WPM
+Chars entered : 53
+Total errors  : 1
+Time elapsed  : 16 sec
+Overall score : 3.66
+========================
+
+========================
+Player        : vova
+Accuracy      : 69%
+Speed         : 0.51 WPM
+Chars entered : 67
+Total errors  : 0
+Time elapsed  : 18 sec
+Overall score : 3.81
+========================
+
+========================
+Player        : Homa
+Accuracy      : 70%
+Speed         : 0.71 WPM
+Chars entered : 81
+Total errors  : 0
+Time elapsed  : 16 sec
+Overall score : 4.40
+========================
+
+========================
+Player        : Noga
+Accuracy      : 43%
+Speed         : 0.67 WPM
+Chars entered : 86
+Total errors  : 1
+Time elapsed  : 11 sec
+Overall score : 3.81
+========================
+
+========================
+Player        : Hrusha
+Accuracy      : 24%
+Speed         : 0.24 WPM
+Chars entered : 71
+Total errors  : 12
+Time elapsed  : 14 sec
+Overall score : 0.50
+========================
+
+========================
+Player        : header
+Accuracy      : 49%
+Speed         : 0.50 WPM
+Chars entered : 81
+Total errors  : 4
+Time elapsed  : 16 sec
+Overall score : 2.78
+========================
+
+========================
+Player        : iiwer
+Accuracy      : 64%
+Speed         : 0.65 WPM
+Chars entered : 76
+Total errors  : 1
+Time elapsed  : 15 sec
+Overall score : 4.21
+========================
+
+========================
+Player        : rtyuio
+Accuracy      : 57%
+Speed         : 0.59 WPM
+Chars entered : 77
+Total errors  : 0
+Time elapsed  : 15 sec
+Overall score : 3.81
+========================
+
+========================
+Player        : abort
+Accuracy      : 41%
+Speed         : 0.62 WPM
+Chars entered : 76
+Total errors  : 3
+Time elapsed  : 10 sec
+Overall score : 3.68
+========================
+
+========================
+Player        : abort
+Accuracy      : 35%
+Speed         : 0.58 WPM
+Chars entered : 83
+Total errors  : 4
+Time elapsed  : 10 sec
+Overall score : 3.01
+========================
+
+========================
+Player        : abort
+Accuracy      : 51%
+Speed         : 0.60 WPM
+Chars entered : 83
+Total errors  : 0
+Time elapsed  : 14 sec
+Overall score : 3.61
+========================
+
+========================
+Player        : welj
+Accuracy      : 57%
+Speed         : 0.62 WPM
+Chars entered : 65
+Total errors  : 0
+Time elapsed  : 12 sec
+Overall score : 4.74
+========================
+
+========================
+Player        : welj
+Accuracy      : 41%
+Speed         : 0.34 WPM
+Chars entered : 70
+Total errors  : 2
+Time elapsed  : 17 sec
+Overall score : 2.27
+========================
+
+========================
+Player        : 123
+Accuracy      : 46%
+Speed         : 0.55 WPM
+Chars entered : 65
+Total errors  : 1
+Time elapsed  : 11 sec
+Overall score : 4.06
+========================
+
+========================
+Player        : pop
+Accuracy      : 90%
+Speed         : 0.70 WPM
+Chars entered : 39
+Total errors  : 0
+Time elapsed  : 10 sec
+Overall score : 8.97
+========================
+
+========================
+Player        : pop
+Accuracy      : 58%
+Speed         : 0.47 WPM
+Chars entered : 66
+Total errors  : 1
+Time elapsed  : 16 sec
+Overall score : 3.50
+========================
+
+========================
+Player        : Player
+Accuracy      : 56%
+Speed         : 0.56 WPM
+Chars entered : 70
+Total errors  : 4
+Time elapsed  : 14 sec
+Overall score : 3.57
+========================
+

@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 3.10.0)
-project(goshatype VERSION 0.1.0 LANGUAGES C)
+cmake_minimum_required(VERSION 3.10)
+project(typefusion LANGUAGES C)
 
-add_executable(goshatype main.c)
-
+add_subdirectory(src)
+add_subdirectory(tests)
