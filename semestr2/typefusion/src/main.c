@@ -24,7 +24,7 @@ int main(int, char**){
         int c, mode, diff, choice, random_idx;
         char playerName[25];
 
-        const char *curret_difficulty = "./include/words.txt";
+        const char *curret_difficulty = "../include/words.txt";
         int text_size = SHORT;
 
         srand(time(NULL));
@@ -88,7 +88,7 @@ int main(int, char**){
                 char buff[100];
                 printf("Stats of all players:\n");
                 FILE *stats_file;
-                stats_file = fopen("./include/stats.txt", "r");
+                stats_file = fopen("../include/stats.txt", "r");
                     if (stats_file){
                         while(fgets(buff, sizeof(buff), stats_file) != NULL){
                             printf("%s", buff);
@@ -161,7 +161,7 @@ int wordsCnt(const char *filename, char words[MAX_WORDS][MAX_LEN]) {
 
 void save_stats(const char name[25], double accuracy, double wpm, int total_len, int error, double time, double score) {
     FILE *stats_file;
-    stats_file = fopen("./include/stats.txt", "a");
+    stats_file = fopen("../include/stats.txt", "a");
 
     if (stats_file == NULL) {
         perror("Error opening stats file");
@@ -280,19 +280,19 @@ int modeDifficulty(char words[MAX_WORDS][MAX_LEN]){
     switch (choiceFunc()){
 
         case 1:{
-            char filename[] = "./include/words.txt";
+            char filename[] = "../include/words.txt";
             word_count = wordsCnt(filename, words);
             return word_count;
         }
 
         case 2:{
-            char filename[] = "./include/words2.txt";
+            char filename[] = "../include/words2.txt";
             word_count = wordsCnt(filename, words);
             return word_count;
         }
 
         case 3:{
-            char filename[] = "./include/words3.txt";
+            char filename[] = "../include/words3.txt";
             word_count = wordsCnt(filename, words);
             return word_count;
         }
@@ -427,8 +427,8 @@ int modePlay(char player_name[25], int total_len, char text[][MAX_LEN], char wor
         printf("\n\n%f\n\n", accuracy);
         if (accuracy > 90){
 
-            if(filename == "./include/words.txt") filename = "./include/words2.txt";
-            else filename = "./include/words3.txt";
+            if(filename == "../include/words.txt") filename = "../include/words2.txt";
+            else filename = "../include/words3.txt";
 
             word_count = wordsCnt(filename, words);
             printf(COLOR_EMERALD"\n\nThe difficulty has been increased! Accuracy: %.2f\n"COLOR_RESET, accuracy);
