@@ -64,7 +64,7 @@ void grtFunc(char name[25]){
 
 void save_stats(const char name[25], double accuracy, double wpm, int total_len, int error, double time,  double score){
     FILE *stats_file;
-    stats_file = fopen("/home/jorik/Документы/Programming-C/semestr2/typefusion/stats.txt", "a");
+    stats_file = fopen("./stats.txt", "a");
     if (stats_file == NULL) {
         perror("Error opening stats file");
         return;
@@ -176,17 +176,17 @@ int modeDifficulty(char words[MAX_WORDS][MAX_LEN]){
     printf("Choose difficulty:\n easy(1)     normal(2)       hard(3)\n ");
     switch (choiceFunc()){
         case 1:{
-            char filename[] = "/home/jorik/Документы/Programming-C/semestr2/typefusion/words.txt";
+            char filename[] = "./words.txt";
             word_count = wordsCnt(filename, words);
             return word_count;
         }
         case 2:{
-            char filename[] = "/home/jorik/Документы/Programming-C/semestr2/typefusion/words2.txt";
+            char filename[] = "./words2.txt";
             word_count = wordsCnt(filename, words);
             return word_count;
         }
         case 3:{
-            char filename[] = "/home/jorik/Документы/Programming-C/semestr2/typefusion/words3.txt";
+            char filename[] = "./words3.txt";
             word_count = wordsCnt(filename, words);
             return word_count;
         }
@@ -308,8 +308,8 @@ int modePlay(char player_name[25], int total_len, char text[][MAX_LEN], char wor
         double accuracy = ((double)len_input / total_len) * 100;
         if (accuracy > 90){
 
-            if(filename == "/home/jorik/Документы/Programming-C/semestr2/typefusion/words.txt") filename = "/home/jorik/Документы/Programming-C/semestr2/typefusion/words2.txt";
-            else filename = "/home/jorik/Документы/Programming-C/semestr2/typefusion/words3.txt";
+            if(filename == "./words.txt") filename = "./words2.txt";
+            else filename = "./words3.txt";
             word_count = wordsCnt(filename, words);
             printf(COLOR_EMERALD"\n\nThe difficulty has been increased! Accuracy: %.2f\n"COLOR_RESET, accuracy);
             for (int i = 0; i < text_size; i++){
@@ -341,7 +341,7 @@ int main(int, char**){
         int c, mode, diff, choice, random_idx;
         char playerName[25];
 
-        const char *curret_difficulty = "/home/jorik/Документы/Programming-C/semestr2/typefusion/words.txt";
+        const char *curret_difficulty = "./words.txt";
         int text_size = SHORT;
 
         srand(time(NULL));
@@ -396,7 +396,7 @@ int main(int, char**){
                 char buff[100];
                 printf("Stats of all players:\n");
                 FILE *stats_file;
-                stats_file = fopen("/home/jorik/Документы/Programming-C/semestr2/typefusion/stats.txt", "r");
+                stats_file = fopen("./stats.txt", "r");
                     if (stats_file){
                         while(fgets(buff, sizeof(buff), stats_file) != NULL){
                             printf("%s", buff);
@@ -407,8 +407,6 @@ int main(int, char**){
                 printf("GG!");
                 sleep(1);
                 flag = false;
-        }
-
-
+            }
         }
     }

@@ -238,3 +238,13 @@ Time elapsed  : 16 sec
 Overall score : 4.40
 ========================
 
+========================
+Player        : Noga
+Accuracy      : 43%
+Speed         : 0.67 WPM
+Chars entered : 86
+Total errors  : 1
+Time elapsed  : 11 sec
+Overall score : 3.81
+========================
+
