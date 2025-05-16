@@ -96,7 +96,7 @@ void endGame(char name[25], int error, double time, int total_len, int len_input
     double accuracy = ((double)len_input / total_len) * 100;
     double score = (((len_input - error) / time) / total_len) * 100;
     double wpm = ((double)len_input / 5) / time;
-    printf("\nStats: \n");
+    printf("\nStats:");
     if (error < 3 && time < 20){
         printf(COLOR_GREEN"\n[NICE]\n" COLOR_RESET "Time: %.0f seconds\nAccuracy: %.0f\nEntered chars: %d\nWpM: %.2f\nTotal score: %.2f\n", time, accuracy, len_input, wpm, score);
         fflush(stdout);
@@ -221,22 +221,24 @@ int modeSize(char words[MAX_WORDS][MAX_LEN]){
     }
 }
 
-int modePlay(char player_name[25], int total_len, char text[][MAX_LEN], char words[MAX_WORDS][MAX_LEN], int word_count, int text_size, const char *filename){
+int modePlay(char player_name[25], int total_len, char text[][MAX_LEN], char words[MAX_WORDS][MAX_LEN], int word_count, int text_size, const char *filename, int time_limit){
 
     time_t start_time;
     time_t current_time;
-    double passed_time;
+    double passed_time = 0;
     int random_idx;
     int error = 0;
+    int last_pos = 0;    
+    int len_input = 0;
+    int right_input = 0;
     total_len += text_size - 1;
+    bool time_left = true;
     printf("\n");
     clearBuff();
 
     if (word_count == 0){
         word_count = wordsCnt(filename, words);
     }
-
-    start_time = time(NULL);
 
     for (int i = 0; i < text_size; i++){
         random_idx = rand() % word_count;
@@ -245,52 +247,83 @@ int modePlay(char player_name[25], int total_len, char text[][MAX_LEN], char wor
         total_len += strlen(text[i]);
     }
     printf("\n\n");
-        
-    int last_pos = 0;    
-    int len_input = 0;
-    int right_input = 0;
-    for (int i = 0; i < text_size; i++){
 
-        int j = 0;
-        char input[MAX_LEN] = {0};
+    start_time = time(NULL);
 
-        while(j < strlen(text[i]) && len_input < total_len){
-            int c = getch();
-            len_input++;
-            if (last_pos < MAX_LEN - 1) {
-                input[last_pos++] = c;
+    while (time_left == true){
+        for (int i = 0; i < text_size && time_left; i++){
+
+            int j = 0;
+            char input[MAX_LEN] = {0};
+
+            current_time = time(NULL);
+            passed_time = difftime(current_time, start_time);
+            if (passed_time >= time_limit){
+                printf(COLOR_YELLOW"\nTime's up! GG\n\n"COLOR_RESET);
+                time_left = false;
+                break;
             }
-            if (c == 127 || c == 8) {
-                bckSpace(&last_pos, &len_input, j);
-            }
-            else if (c != EOF && c != '\n'){
+
+            while(j < strlen(text[i]) && len_input < total_len && time_left){
+
+                int c = getch();
+                len_input++;
                 if (last_pos < MAX_LEN - 1) {
                     input[last_pos++] = c;
                 }
-                if (c == text[i][j]){
-                    printf(COLOR_GREEN "%c" COLOR_RESET, (char)c);
-                    j++;
+
+                if (c == 127 || c == 8) {
+                    bckSpace(&last_pos, &len_input, j);
+                }
+                else if (c != EOF && c != '\n'){
+                    if (last_pos < MAX_LEN - 1) {
+                        input[last_pos++] = c;
+                    }
+                    if (c == text[i][j]){
+                        printf(COLOR_GREEN "%c" COLOR_RESET, (char)c);
+                        j++;
+                        right_input++;
+                    } else {
+                        printf(COLOR_RED "%c" COLOR_RESET, c);
+                        error++;
+                    }
+                    last_pos++;
+                }
+
+            }
+            if (!time_left) break;
+
+            if (i < text_size - 1){
+                int c = getch();
+                if (c == ' ' && len_input < total_len) {
+                    printf(" ");
+                    len_input++;
                     right_input++;
-                } else {
-                    printf(COLOR_RED "%c" COLOR_RESET, c);
+                } else{
+                    printf(COLOR_BRIGHT_RED "%c" COLOR_RESET, (char)c);
                     error++;
                 }
-                last_pos++;
             }
         }
-        if (i < text_size - 1){
-            int c = getch();
-            if (c == ' ' && len_input < total_len) {
-                printf(" ");
-                len_input++;
-                right_input++;
-            } else{
-                printf(COLOR_BRIGHT_RED "%c" COLOR_RESET, (char)c);
-                error++;
+        double accuracy = ((double)len_input / total_len) * 100;
+        if (accuracy > 90){
+
+            if(filename == "/home/jorik/Документы/Programming-C/semestr2/typefusion/words.txt") filename = "/home/jorik/Документы/Programming-C/semestr2/typefusion/words2.txt";
+            else filename = "/home/jorik/Документы/Programming-C/semestr2/typefusion/words3.txt";
+            word_count = wordsCnt(filename, words);
+            printf(COLOR_EMERALD"\n\nThe difficulty has been increased! Accuracy: %.2f\n"COLOR_RESET, accuracy);
+            for (int i = 0; i < text_size; i++){
+                random_idx = rand() % word_count;
+                strcpy(text[i], words[random_idx]);
+                printf("%s ", text[i]);
+                total_len += strlen(text[i]);
             }
+            printf("\n\n");
+        } else {
+            time_left = false;
         }
     }
-    current_time = time(NULL);
+
     passed_time = difftime(current_time, start_time);
     endGame(player_name, error, passed_time, total_len, right_input, text_size);
 }
@@ -304,6 +337,7 @@ int main(int, char**){
         int word_count = 0;
         int error = 0;
         int total_len = 0;
+        int time_limit = 10;
         int c, mode, diff, choice, random_idx;
         char playerName[25];
 
@@ -323,7 +357,7 @@ int main(int, char**){
 
         switch (navMenu()) {
             case 1: //play
-                modePlay(playerName, total_len, text, words, word_count, text_size, curret_difficulty);
+                modePlay(playerName, total_len, text, words, word_count, text_size, curret_difficulty, time_limit);
                 break;
 
             case 2: //difficulty
@@ -332,8 +366,18 @@ int main(int, char**){
                 break;
 
             case 3: //mode
-                printf("HELLO 3");
-                //mode 1 min 2 min 5 min
+                printf("Time limit:     15(1)   30(2)   60(3)\n>");
+                choice = choiceFunc();
+                if (choice == 1) {
+                    printf("Time set: 15\n");
+                    time_limit = 15;
+                } else if (choice == 2) {
+                    printf("Time set: 30\n");
+                    time_limit = 30;
+                } else {
+                    printf("Time set: 60\n");
+                    time_limit = 60;
+                }
                 clearBuff();
                 break;
 
