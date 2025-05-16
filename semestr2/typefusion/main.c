@@ -24,6 +24,110 @@
 
 bool flag = true;
 
+FILE *openFile(const char *filename);
+
+int getch(void);
+void clearBuff();
+int bckSpace(int *last_pos, int *len_input, int j);
+void grtFunc(char name[25]);
+
+
+void save_stats(const char name[25], double accuracy, double wpm, int total_len, int error, double time,  double score);
+void endGame(char name[25], int error, double time, int total_len, int len_input, int text_size);
+void printMenu(char name[25]);
+int choiceFunc();
+int navMenu();
+
+
+int wordsCnt(const char *filename, char words[MAX_WORDS][MAX_LEN]);
+int modeDifficulty(char words[MAX_WORDS][MAX_LEN]);
+int modeSize(char words[MAX_WORDS][MAX_LEN]);
+int modePlay(char player_name[25], int total_len, char text[][MAX_LEN], char words[MAX_WORDS][MAX_LEN], int word_count, int text_size, const char *filename, int time_limit);
+
+
+int main(int, char**){
+
+        FILE *file;
+        char words[MAX_WORDS][MAX_LEN];
+        char text[SHORT][MAX_LEN];
+        char user_input[MAX_LEN];
+        int word_count = 0;
+        int error = 0;
+        int total_len = 0;
+        int time_limit = 10;
+        int c, mode, diff, choice, random_idx;
+        char playerName[25];
+
+        const char *curret_difficulty = "./words.txt";
+        int text_size = SHORT;
+
+        srand(time(NULL));
+
+        printf("Enter your name: ");
+        fgets(playerName, sizeof playerName, stdin);
+        playerName[strcspn(playerName, "\n")] = '\0';
+
+        grtFunc(playerName);
+
+        while (flag){
+        printMenu(playerName);
+
+        switch (navMenu()) {
+            case 1: //play
+                modePlay(playerName, total_len, text, words, word_count, text_size, curret_difficulty, time_limit);
+                break;
+
+            case 2: //difficulty
+                word_count = modeDifficulty(words);
+                clearBuff();
+                break;
+
+            case 3: //mode
+                printf("Time limit:     15(1)   30(2)   60(3)\n>");
+                choice = choiceFunc();
+                if (choice == 1) {
+                    printf("Time set: 15\n");
+                    time_limit = 15;
+                } else if (choice == 2) {
+                    printf("Time set: 30\n");
+                    time_limit = 30;
+                } else {
+                    printf("Time set: 60\n");
+                    time_limit = 60;
+                }
+                clearBuff();
+                break;
+
+            case 4: // text size
+                choice = modeSize(words);
+                if (choice == 1) {
+                    text_size = SHORT;
+                } else if (choice == 2) {
+                    text_size = MEDIUM;
+                } else {
+                    text_size = LONG;
+                }
+                clearBuff();
+                break;            
+            case 5: //print stats
+                char buff[100];
+                printf("Stats of all players:\n");
+                FILE *stats_file;
+                stats_file = fopen("./stats.txt", "r");
+                    if (stats_file){
+                        while(fgets(buff, sizeof(buff), stats_file) != NULL){
+                            printf("%s", buff);
+                        }
+                    }
+                    break;
+            case 6: //exit
+                printf("GG!");
+                sleep(1);
+                flag = false;
+            }
+        }
+    }
+
 FILE *openFile(const char *filename){
     FILE *file = fopen(filename, "r");
     if(file == NULL){
@@ -327,86 +431,3 @@ int modePlay(char player_name[25], int total_len, char text[][MAX_LEN], char wor
     passed_time = difftime(current_time, start_time);
     endGame(player_name, error, passed_time, total_len, right_input, text_size);
 }
-
-int main(int, char**){
-
-        FILE *file;
-        char words[MAX_WORDS][MAX_LEN];
-        char text[SHORT][MAX_LEN];
-        char user_input[MAX_LEN];
-        int word_count = 0;
-        int error = 0;
-        int total_len = 0;
-        int time_limit = 10;
-        int c, mode, diff, choice, random_idx;
-        char playerName[25];
-
-        const char *curret_difficulty = "./words.txt";
-        int text_size = SHORT;
-
-        srand(time(NULL));
-
-        printf("Enter your name: ");
-        fgets(playerName, sizeof playerName, stdin);
-        playerName[strcspn(playerName, "\n")] = '\0';
-
-        grtFunc(playerName);
-
-        while (flag){
-        printMenu(playerName);
-
-        switch (navMenu()) {
-            case 1: //play
-                modePlay(playerName, total_len, text, words, word_count, text_size, curret_difficulty, time_limit);
-                break;
-
-            case 2: //difficulty
-                word_count = modeDifficulty(words);
-                clearBuff();
-                break;
-
-            case 3: //mode
-                printf("Time limit:     15(1)   30(2)   60(3)\n>");
-                choice = choiceFunc();
-                if (choice == 1) {
-                    printf("Time set: 15\n");
-                    time_limit = 15;
-                } else if (choice == 2) {
-                    printf("Time set: 30\n");
-                    time_limit = 30;
-                } else {
-                    printf("Time set: 60\n");
-                    time_limit = 60;
-                }
-                clearBuff();
-                break;
-
-            case 4: // text size
-                choice = modeSize(words);
-                if (choice == 1) {
-                    text_size = SHORT;
-                } else if (choice == 2) {
-                    text_size = MEDIUM;
-                } else {
-                    text_size = LONG;
-                }
-                clearBuff();
-                break;            
-            case 5: //print stats
-                char buff[100];
-                printf("Stats of all players:\n");
-                FILE *stats_file;
-                stats_file = fopen("./stats.txt", "r");
-                    if (stats_file){
-                        while(fgets(buff, sizeof(buff), stats_file) != NULL){
-                            printf("%s", buff);
-                        }
-                    }
-                    break;
-            case 6: //exit
-                printf("GG!");
-                sleep(1);
-                flag = false;
-            }
-        }
-    }

@@ -248,3 +248,13 @@ Time elapsed  : 11 sec
 Overall score : 3.81
 ========================
 
+========================
+Player        : Hrusha
+Accuracy      : 24%
+Speed         : 0.24 WPM
+Chars entered : 71
+Total errors  : 12
+Time elapsed  : 14 sec
+Overall score : 0.50
+========================
+
