@@ -378,3 +378,93 @@ Time elapsed  : 14 sec
 Overall score : 3.57
 ========================
 
+========================
+Player        : U
+Accuracy      : 38%
+Speed         : 0.74 WPM
+Chars entered : 155
+Total errors  : 1
+Time elapsed  : 16 sec
+Overall score : 2.34
+========================
+
+========================
+Player        : Yer
+Accuracy      : 47%
+Speed         : 0.76 WPM
+Chars entered : 81
+Total errors  : 0
+Time elapsed  : 10 sec
+Overall score : 4.69
+========================
+
+========================
+Player        : Gosha
+Accuracy      : 38%
+Speed         : 0.60 WPM
+Chars entered : 79
+Total errors  : 1
+Time elapsed  : 10 sec
+Overall score : 3.67
+========================
+
+========================
+Player        : Gosha
+Accuracy      : 80%
+Speed         : 0.63 WPM
+Chars entered : 71
+Total errors  : 0
+Time elapsed  : 18 sec
+Overall score : 4.46
+========================
+
+========================
+Player        : Gosha
+Accuracy      : 82%
+Speed         : 0.39 WPM
+Chars entered : 33
+Total errors  : 6
+Time elapsed  : 14 sec
+Overall score : 4.55
+========================
+
+========================
+Player        : Gosha
+Accuracy      : 89%
+Speed         : 0.60 WPM
+Chars entered : 27
+Total errors  : 3
+Time elapsed  : 8 sec
+Overall score : 9.72
+========================
+
+========================
+Player        : QWERTYUIOP{}
+Accuracy      : 57%
+Speed         : 0.23 WPM
+Chars entered : 28
+Total errors  : 14
+Time elapsed  : 14 sec
+Overall score : 0.51
+========================
+
+========================
+Player        : QWERTYUIOP{}
+Accuracy      : 31%
+Speed         : 0.14 WPM
+Chars entered : 32
+Total errors  : 25
+Time elapsed  : 14 sec
+Overall score : -3.35
+========================
+
+========================
+Player        : QWERTYUIOP{}
+Accuracy      : 18%
+Speed         : 0.09 WPM
+Chars entered : 38
+Total errors  : 7
+Time elapsed  : 15 sec
+Overall score : 0.00
+========================
+
