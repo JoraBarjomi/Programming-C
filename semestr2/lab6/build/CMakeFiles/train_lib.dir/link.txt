@@ -1,1 +1,0 @@
-/usr/bin/cc -fPIC -shared -Wl,-soname,libtrain_lib.so -o libtrain_lib.so CMakeFiles/train_lib.dir/src/train.c.o
